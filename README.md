@@ -1,5 +1,6 @@
 # wallpaper-process-wordcloud
-it's a script that generates a gnome wallpaper with the pc processes in a word cloud that looks like a picture.
+it's a script that generates a gnome wallpaper with the pc processes in a word cloud that looks like a minimalist image.
+![](https://raw.githubusercontent.com/tachyglossues/wallpaper-process-wordcloud/master/example/screenshot.png)
 
 
 ## Setup
@@ -20,7 +21,7 @@ nice python3 generateWallpaper.py
 
 Define the resolution of your screen and the execution interval of the script in the config.json file.
  
- 
+
 
 
 
