@@ -1,6 +1,6 @@
 # wallpaper-process-wordcloud
 it's a script that generates a gnome wallpaper with the pc processes in a word cloud that looks like a minimalist image.
-![](https://raw.githubusercontent.com/tachyglossues/wallpaper-process-wordcloud/master/example/screenshot.png)
+![](https://raw.githubusercontent.com/tachyglossues/wallpaper-process-wordcloud/master/screenshot.png)
 
 
 ## Setup
