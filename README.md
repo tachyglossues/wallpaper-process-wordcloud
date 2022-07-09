@@ -14,7 +14,7 @@ git clone https://github.com/tachyglossues/wallpaper-process-wordcloud.git
 * Run.
 
 ```
-cd allpaper-process-wordcloud
+cd wallpaper-process-wordcloud
 nice python3 generateWallpaper.py
 ```
 ## Configure (optional)
