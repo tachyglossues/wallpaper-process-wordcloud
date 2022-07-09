@@ -8,7 +8,11 @@ from wordcloud import WordCloud, ImageColorGenerator
 import re
 import time
 
-
+if (change_wallpaper := input(str("Veux tu que ton wallpaper soit changé automatiquement (fonctionne uniquement sous gnome) [O/n] ?")) == ("oui" or "O" or "y" or "o" or "0" )):
+    if change_wallpaper == ("oui" or "O" or "o" or "0" or "y"):
+        change_wallpaper = True
+else:
+    change_wallpaper = False
 while True:
     d = os.path.dirname(__file__) if "__file__" in locals() else os.getcwd()
     os.system("top -b -n 1 > top.out")
@@ -64,8 +68,13 @@ while True:
         (int(width / 2 - wordcloud.size[0] / 2), int(height / 2 - wordcloud.size[1] / 2))
     )
     wallpaper.save("wallpaper.png")
-    os.system("gsettings set org.gnome.desktop.background picture-uri-dark wallpaper-process-wordcloud/wallpaper.png")
-    os.system("gsettings set org.gnome.desktop.background picture-uri wallpaper-process-wordcloud/wallpaper.png")
+    
+    if change_wallpaper == True:
+        os.system("gsettings set org.gnome.desktop.background picture-uri file:///home/pi/wallpaper.png")
+        os.system("gsettings set org.gnome.desktop.background picture-uri-dark wallpaper-process-wordcloud/wallpaper.png")
+        os.system("gsettings set org.gnome.desktop.background picture-uri wallpaper-process-wordcloud/wallpaper.png")
+        print("Wallpaper changé")
     os.system("rm top.out")
     os.system("rm wc.png")    
+    print("Wallpaper généré")
     time.sleep(configJSON["interval"]["refresh"])
