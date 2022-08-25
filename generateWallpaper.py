@@ -8,20 +8,17 @@ from wordcloud import WordCloud, ImageColorGenerator
 import re
 import time
 
-if (change_wallpaper := input(str("Veux tu que ton wallpaper soit changé automatiquement (fonctionne uniquement sous gnome) [O/n] ?")) == ("oui" or "O" or "y" or "o" or "0" )):
-    if change_wallpaper == ("oui" or "O" or "o" or "0" or "y"):
-        change_wallpaper = True
-else:
-    change_wallpaper = False
+configJSON = json.loads(open("config.json", "r").read())
+
+change_wallpaper = configJSON["change_wallpaper"]
 while True:
     d = os.path.dirname(__file__) if "__file__" in locals() else os.getcwd()
     os.system("top -b -n 1 > top.out")
-    configJSON = json.loads(open("config.json", "r").read())
     commandList = []
     with open("top.out", "r") as topFile:
         topOutput = topFile.read().split("\n")[7:]
         for line in topOutput[:-1]:
-            line = re.sub(r'\s+', ' ', line).strip()
+            line = re.sub(r"\s+", " ", line).strip()
             fields = line.split(" ")
             try:
                 if fields[11].count("/") > 0:
@@ -43,7 +40,7 @@ while True:
             commandDict[command] = [cpu + 1, mem + 1]
     resourceDict = {}
     for command, [cpu, mem] in commandDict.items():
-        resourceDict[command] = (cpu+mem)
+        resourceDict[command] = cpu + mem
     try:
         width, height = ((os.popen("xrandr | grep '*'").read()).split()[0]).split("x")
         width = int(width)
@@ -54,27 +51,39 @@ while True:
     wallpaper_coloring = wallpaper_coloring[::2, ::2]
     wallpaper_mask = wallpaper_coloring.copy()
     wallpaper_mask[wallpaper_mask.sum(axis=2) == 0] = 255
-    edges = np.mean([gaussian_gradient_magnitude(wallpaper_coloring[:, :, i] / 255., 2) for i in range(2)], axis=0)
+    edges = np.mean(
+        [
+            gaussian_gradient_magnitude(wallpaper_coloring[:, :, i] / 255.0, 2)
+            for i in range(2)
+        ],
+        axis=0,
+    )
     wallpaper_mask[edges > 1] = 255
-    wc = WordCloud(mask=wallpaper_mask, random_state=55).generate_from_frequencies(resourceDict)
+    wc = WordCloud(mask=wallpaper_mask, random_state=55).generate_from_frequencies(
+        resourceDict
+    )
     plt.imshow(wc)
     image_colors = ImageColorGenerator(wallpaper_coloring)
     wc.recolor(color_func=image_colors)
-    wc.to_file('wc.png')
+    wc.to_file("wc.png")
     wordcloud = Image.open("wc.png")
-    wallpaper = Image.new('RGB', (width, height), configJSON["wordcloud"]["background"])
+    wallpaper = Image.new("RGB", (width, height))
     wallpaper.paste(
         wordcloud,
-        (int(width / 2 - wordcloud.size[0] / 2), int(height / 2 - wordcloud.size[1] / 2))
+        (
+            int(width / 2 - wordcloud.size[0] / 2),
+            int(height / 2 - wordcloud.size[1] / 2),
+        ),
     )
     wallpaper.save("wallpaper.png")
-    
-    if change_wallpaper == True:
-        os.system("gsettings set org.gnome.desktop.background picture-uri file:///home/pi/wallpaper.png")
-        os.system("gsettings set org.gnome.desktop.background picture-uri-dark wallpaper-process-wordcloud/wallpaper.png")
-        os.system("gsettings set org.gnome.desktop.background picture-uri wallpaper-process-wordcloud/wallpaper.png")
-        print("Wallpaper changé")
+
+    os.system(
+        "gsettings set org.gnome.desktop.background picture-uri-dark ~/wallpaper-process-wordcloud/wallpaper.png"
+    )
+    os.system(
+        "gsettings set org.gnome.desktop.background picture-uri ~/wallpaper-process-wordcloud/wallpaper.png"
+    )
     os.system("rm top.out")
-    os.system("rm wc.png")    
+    os.system("rm wc.png")
     print("Wallpaper généré")
-    time.sleep(configJSON["interval"]["refresh"])
+    time.sleep(configJSON["interval"])
