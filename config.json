@@ -1,13 +1,5 @@
 {
-    "resolution": {
-        "height": 1080,
-        "width": 1920
-    },
-    "wordcloud": {
-        "background": "#101010",
-        "margin": 20
-    },
-    "interval": {
-    	"refresh": 1800
-    }
+    "change_wallpaper": "True"
+    ,
+    "interval": 1800
 }
