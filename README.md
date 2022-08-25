@@ -20,8 +20,7 @@ python3 generateWallpaper.py
 ```
 ## Configure (optional)
 
-Define the resolution of your screen and the execution interval of the script in the config.json file.
- 
+Define the interval between wallpaper generations in the config.json file and if the wallpaper varies or not, only on gnome. 
 
 
 
