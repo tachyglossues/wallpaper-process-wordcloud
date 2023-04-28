@@ -1,6 +1,6 @@
 # wallpaper-process-wordcloud
 it's a script that generates a gnome wallpaper with the pc processes in a word cloud that looks like a minimalist image.
-![](https://github.com/tachyglossues/wallpaper-process-wordcloud/blob/82479e394a88dff5b734a08e3f1556c5b45a6bb8/screenshot.png)
+![](https://github.com/tachyglossues/wallpaper-process-wordcloud/blob/main/screenshot/screenshot2.png)
 
 
 ## Setup
@@ -15,30 +15,19 @@ git clone https://github.com/tachyglossues/wallpaper-process-wordcloud.git
 
 ```
 cd wallpaper-process-wordcloud
-pip3 install -r requirements.txt 
 python3 generateWallpaper.py
 ```
-## Configure (optional)
+## Install :
 
-Define the interval between wallpaper generations in the config.json file and if the wallpaper varies or not, only on gnome. 
+```
+pip install wordcloud
+pip install PIL
+pip install screeninfo
+pip install scipy
+pip install numpy
+pip install matplolib
+pip install psutil
+```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-************************************************************************************
-This is my upgrade to this script: https://github.com/anirudhajith/process-wallpaper
+##Note:
+This project is currently participating in the Trophée NSI competition, a French competition for high school students (first and final year) who have chosen NSI (information science) as their specialty.
