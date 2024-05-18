@@ -28,6 +28,3 @@ pip install numpy
 pip install matplolib
 pip install psutil
 ```
-
-##Note:
-This project is currently participating in the Trophée NSI competition, a French competition for high school students (first and final year) who have chosen NSI (information science) as their specialty.
